@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 function Breadcrumb() {
   return (
-    <div className=' w-full flex justify-between px-8 py-12 '>
+    <>
     <div className='flex content-center'>
        <Link to={'/'}>
         <img src={home}/> 
@@ -15,7 +15,7 @@ function Breadcrumb() {
     <div>
      <img src={notification} width={30}/>
     </div>
-    </div>
+    </>
   )
 }
 
