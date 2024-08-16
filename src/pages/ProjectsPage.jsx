@@ -20,7 +20,7 @@ function ProjectsPage() {
 
   function createProjectHandler(e) {
     e.preventDefault();
-    navigate("/project");
+    navigate("/projects");
   }
 
   return (
