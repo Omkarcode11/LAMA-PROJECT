@@ -1,15 +1,56 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import login from "./../assets/login.svg";
-import {Link} from 'react-router-dom'
+import { Link, useNavigate } from "react-router-dom";
+import { myContext } from "../hooks/MyContextProvider";
+import axios from "axios";
+import { BASE_URL } from "../utils/constant";
 function Login() {
+  let { auth, setAuth } = useContext(myContext);
+  let [error, setError] = useState("");
+  let navigate = useNavigate();
+  async function submitHandler(e) {
+    e.preventDefault();
+    let form = new FormData(e.target);
+    let payload = {
+      email: form.get("email"),
+      password: form.get("password"),
+    };
+    await loginRequest(payload);
+  }
+
+  async function loginRequest(payload) {
+    try {
+      let res = await axios.post(BASE_URL + "/api/auth/login", payload);
+      if (res.status != 200) {
+        setError(res.data);
+        throw new Error(res.data);
+      }
+
+      setAuth((prev) => ({
+        username: res.data.username,
+        Authorize: true,
+        email: res.data.email,
+      }));
+    } catch (error) {
+      setError(error.response.data.message);
+      throw new Error(error.message);
+    }
+  }
+
+  useEffect(() => {
+    if (auth.Authorize) {
+      navigate("/");
+    }
+  }, [auth.Authorize]);
+
   return (
     <>
       <div className="flex flex-col justify-center items-center ">
         <span>
-        <img src={login} />
+          <img src={login} />
         </span>
         <div className="bg-white p-8 max-w-sm w-full">
-          <form>
+          <form onSubmit={submitHandler}>
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -18,8 +59,10 @@ function Login() {
                 Email Address
               </label>
               <input
+                name="email"
                 type="email"
                 id="email"
+                required
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Email Address"
               />
@@ -32,8 +75,10 @@ function Login() {
                 Password
               </label>
               <input
+                name="password"
                 type="password"
                 id="password"
+                required
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Password"
               />
@@ -70,11 +115,15 @@ function Login() {
             Continue with Google
           </button>
           <div className="mt-4 text-center">
-            <Link to='/auth/signup' className="text-sm text-purple-600 hover:underline">
+            <Link
+              to="/auth/signup"
+              className="text-sm text-purple-600 hover:underline"
+            >
               Don't have an account? Create Account
             </Link>
           </div>
         </div>
+        <h1 className="text-red-500 font-bold ">{error}</h1>
       </div>
     </>
   );

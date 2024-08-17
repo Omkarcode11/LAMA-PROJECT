@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import LeftSideBar from './LeftSideBar'
 import Breadcrumb from './Breadcrumb'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigation } from 'react-router-dom'
+import useCheckAuth from '../hooks/useCheckAuth'
+import Loading from './Loading'
 
 function ProjectNavigation() {
+  let {auth,navigate} = useCheckAuth()
+  let navi = useNavigation();
+
+  if (navi.state == "loading") {
+    return <Loading />;
+  } else
   return (
     <div className='flex justify-between bg-slate-100'>
     <LeftSideBar/>

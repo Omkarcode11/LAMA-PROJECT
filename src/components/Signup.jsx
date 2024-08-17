@@ -1,21 +1,63 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import login from './../assets/login.svg'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { BASE_URL } from '../utils/constant';
+import { myContext } from '../hooks/MyContextProvider';
 
-function Signup() {
+ function Signup() {
+  let {auth,setAuth} = useContext(myContext)
+  let navigate = useNavigate()
+  async function submitHandler(e){
+    e.preventDefault()
+    let form = new FormData(e.target)
+    console.log(form.get('username'))
+    let payload = {
+      username: form.get('username'),
+      email : form.get('email'),
+      password:form.get('email')
+    }
+    await signupRequest(payload)
+  }
+
+  async function signupRequest(payload){
+     try {
+      let res = await axios.post(BASE_URL+'/api/auth/register',payload)
+      if(res.status!=201){
+        throw new Error(res.data) 
+      }
+
+      setAuth(prev=>({
+        username : res.data.username,
+        Authorize: true,
+        email : res.data.email
+      }))
+      
+     } catch (error) {
+      throw new Error(error.message)
+     }
+  }
+
+  useEffect(()=>{
+    if(auth.Authorize){
+      navigate('/')
+    }
+  },[auth.Authorize])
+
   return (
     <div className="flex flex-col justify-center items-center">
             <span>
         <img src={login} className='w-44' />
         </span>
       <div className="bg-white p-8  w-full">
-        <form>
+        <form onSubmit={submitHandler}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="fullName">
-              Full Name
+              Username
             </label>
             <input
               type="text"
+              name='username'
               id="fullName"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Full Name"
@@ -28,6 +70,7 @@ function Signup() {
             <input
               type="email"
               id="email"
+              name='email'
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Email Address"
             />
@@ -39,6 +82,7 @@ function Signup() {
             <input
               type="password"
               id="password"
+              name='password'
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Password"
             />

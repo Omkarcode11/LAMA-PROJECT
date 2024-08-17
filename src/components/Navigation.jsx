@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import logo from './../assets/logo.svg'
 import setting from './../assets/setting.svg'
 import notification from './../assets/notification.svg'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate, useNavigation } from 'react-router-dom'
+import { myContext } from '../hooks/MyContextProvider'
+import useCheckAuth from '../hooks/useCheckAuth'
+import Loading from './Loading'
 
 function Navigation() {
+  let {auth,navigate} = useCheckAuth('')
+
+  let navi = useNavigation();
+
+  if (navi.state == "loading") {
+    return <Loading />;
+  } else
   return (
     <>
     <header className='flex justify-between p-6'>

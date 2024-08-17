@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import heroImage from "./../assets/heroImage.svg";
 import Button from "../components/Button";
 import add from "./../assets/add.svg";
@@ -7,22 +7,22 @@ import { useNavigate } from "react-router-dom";
 import CreateProjectModal from "../components/CreateProjectModal";
 
 function HomePage() {
-    let [show,setShow] = useState(false)
-    let navigate = useNavigate()
+  let [show, setShow] = useState(false);
 
-    function showModal(){
-        setShow(prev=>true)
-    }
+  let navigate = useNavigate();
 
-    function hide(){
-        setShow(prev=>false)
-    }
+  function showModal() {
+    setShow((prev) => true);
+  }
 
-    function createProjectHandler(e){
-     e.preventDefault()
-     navigate('/projects')
-    }
+  function hide() {
+    setShow((prev) => false);
+  }
 
+  function createProjectHandler(e) {
+    e.preventDefault();
+    navigate("/projects");
+  }
 
   return (
     <div className="">
@@ -39,15 +39,23 @@ function HomePage() {
         commodo consequat. Duis aute irure dolor in reprehenderit in
       </p>
       <div className="flex justify-center p-4">
-      <Button text={"Create new Project"}  width={90} size='xl' onClick={showModal}>
-        <img src={add} width={30} />
-      </Button>
+        <Button
+          text={"Create new Project"}
+          width={90}
+          size="xl"
+          onClick={showModal}
+        >
+          <img src={add} width={30} />
+        </Button>
       </div>
-        {show &&
-      <Modal onClose={hide}>
-         <CreateProjectModal createProjectHandler={createProjectHandler} hide={hide}/>
-      </Modal>
-        }
+      {show && (
+        <Modal onClose={hide}>
+          <CreateProjectModal
+            createProjectHandler={createProjectHandler}
+            hide={hide}
+          />
+        </Modal>
+      )}
     </div>
   );
 }
