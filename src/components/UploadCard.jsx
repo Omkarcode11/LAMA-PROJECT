@@ -1,8 +1,8 @@
 import React from "react";
 
-function UploadCard({text,svg}) {
+function UploadCard({text,svg,...props}) {
   return (
-    <div className="flex items-center justify-center p-8 bg-white border rounded-lg shadow-md cursor-pointer ">
+    <div className="flex items-center justify-center p-8 bg-white border rounded-lg shadow-md cursor-pointer " {...props}>
       <div className="flex items-center space-x-4">
       
         <div className="text-lg font-medium text-gray-800">

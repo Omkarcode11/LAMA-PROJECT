@@ -10,6 +10,8 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import AddPodCast from "./pages/AddPodCast";
 import EditEpisode from "./components/EditEpisode";
+import AccountSettings from "./components/AccountSetting";
+import ComingSoon from "./components/ComingSoon";
 
 function App() {
   const route = createBrowserRouter([
@@ -22,12 +24,18 @@ function App() {
       {path:"",element:<HomePage/>},
       {path:'projects',element:<ProjectsPage/>,children:[
         {path:'',element:<AllProjects/>},
+      
       ]}
     ]},
 
     {path:"/projects/:id",element:<ProjectNavigation/>,children:[
       {path:'',element:<AddPodCast/>},
-      {path:'edit',element:<EditEpisode/>}
+      {path:'edit',element:<EditEpisode/>},
+      {path:'account',element:<AccountSettings/>},
+      {path:'deployment',element:<ComingSoon/>},
+      {path:'widget-config',element:<ComingSoon/>},
+      {path:'upgrade',element:<ComingSoon/>},
+
     ]}
 
   ])
