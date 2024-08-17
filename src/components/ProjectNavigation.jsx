@@ -5,10 +5,10 @@ import { Outlet } from 'react-router-dom'
 
 function ProjectNavigation() {
   return (
-    <div className='flex justify-between'>
+    <div className='flex justify-between bg-slate-100'>
     <LeftSideBar/>
-    <div className='w-full'>
-    <div  className='flex justify-between px-8 py-12 '>
+    <div className='w-full px-8 py-12'>
+    <div  className='flex justify-between  '>
     <Breadcrumb/>
     </div>
     <Outlet/>

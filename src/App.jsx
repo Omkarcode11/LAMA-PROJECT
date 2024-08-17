@@ -3,14 +3,13 @@ import HomePage from "./pages/HomePage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import ProjectsPage from "./pages/ProjectsPage";
-import ProjectCard from "./components/ProjectCard";
 import AllProjects from "./components/AllProjects";
-import Project from "./components/Project";
 import ProjectNavigation from "./components/ProjectNavigation";
-import UploadPage from "./pages/UploadPage";
 import AuthPage from "./pages/AuthPage";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import AddPodCast from "./pages/AddPodCast";
+import EditEpisode from "./components/EditEpisode";
 
 function App() {
   const route = createBrowserRouter([
@@ -26,8 +25,9 @@ function App() {
       ]}
     ]},
 
-    {path:"/project/:id",element:<ProjectNavigation/>,children:[
-      {path:'',element:<UploadPage/>}
+    {path:"/projects/:id",element:<ProjectNavigation/>,children:[
+      {path:'',element:<AddPodCast/>},
+      {path:'edit',element:<EditEpisode/>}
     ]}
 
   ])

@@ -9,7 +9,7 @@ import diamond from "./../assets/diamond.svg";
 
 function LeftSideBar() {
   return (
-    <div className="h-screen w-[30%] flex flex-col justify-between px-3">
+    <div className="h-screen w-[30%] flex flex-col justify-between px-3 bg-white">
       <div>
         <img src={logo} className="pt-10  w-44" />
         <p className="text-[#49454F] font-bold px-4 pt-4 pb-2">
