@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import logo from './../assets/logo.svg'
 import setting from './../assets/setting.svg'
 import notification from './../assets/notification.svg'
-import { Outlet, useNavigate, useNavigation } from 'react-router-dom'
+import { Link, Outlet, useNavigate, useNavigation } from 'react-router-dom'
 import { myContext } from '../hooks/MyContextProvider'
 import useCheckAuth from '../hooks/useCheckAuth'
 import Loading from './Loading'
@@ -19,9 +19,12 @@ function Navigation() {
     <>
     <header className='flex justify-between p-6'>
      <div>
+     <Link to={'/'}>
      <img src={logo} />
+     </Link>
      </div>
      <div className='flex gap-3'>
+
     <img src={setting}/>
     <img src={notification}/>
      </div>

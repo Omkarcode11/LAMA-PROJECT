@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { myContext } from '../hooks/MyContextProvider';
 
 const AccountSettings = () => {
+  let {auth} = useContext(myContext)
   return (
     <div className="flex flex-col bg-gray-100 p-4">
       {/* Account Settings Header */}
@@ -16,11 +18,12 @@ const AccountSettings = () => {
           <div>
             <input
               type="text"
+              value={auth.username}
               className=" w-full bg-gray-100 border border-gray-300 rounded-lg text-black px-3 py-2 mb-2"
             />
             <input
               type="email"
-              value=""
+              value={auth.email}
               className=" w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-2"
               readOnly
             />

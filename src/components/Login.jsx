@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { myContext } from "../hooks/MyContextProvider";
 import axios from "axios";
 import { BASE_URL } from "../utils/constant";
+import { setToken } from "../utils/setToken";
 function Login() {
   let { auth, setAuth } = useContext(myContext);
   let [error, setError] = useState("");
@@ -31,6 +32,7 @@ function Login() {
         Authorize: true,
         email: res.data.email,
       }));
+      setToken(res.data.token)
     } catch (error) {
       setError(error.response.data.message);
       throw new Error(error.message);

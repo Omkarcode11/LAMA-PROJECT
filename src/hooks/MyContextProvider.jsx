@@ -13,10 +13,12 @@ function MyContextProvider({ children }) {
 
   // State for events (if you need it)
   let [projects, setProjects] = useState([]);
+  let [selectedProject,setSelectedProject] = useState({})
+  let [episodes,setEpisodes] = useState([])
 
   // Provide both auth state and setAuth function in the context
   return (
-    <myContext.Provider value={{ auth, setAuth, projects, setProjects }}>
+    <myContext.Provider value={{auth, setAuth, projects, setProjects,selectedProject,setSelectedProject,episodes,setEpisodes }}>
       {children}
     </myContext.Provider>
   );

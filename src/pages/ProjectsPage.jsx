@@ -5,9 +5,11 @@ import Button from "../components/Button";
 import Modal from "../components/Modal";
 import add from "./../assets/add.svg";
 import CreateProjectModal from "../components/CreateProjectModal";
+import useProject from "../hooks/useProject";
 
 function ProjectsPage() {
   let [show, setShow] = useState(false);
+  let { createProject } = useProject();
   let navigate = useNavigate();
 
   function showModal() {
@@ -18,14 +20,16 @@ function ProjectsPage() {
     setShow((prev) => false);
   }
 
-  function createProjectHandler(e) {
+  function createProjectHandler(e, title) {
     e.preventDefault();
-    navigate("/projects");
+    let data = {title:title}
+    createProject(data);
+    hide();
   }
 
   return (
     <div className="px-20">
-      <div className="flex justify-between"> 
+      <div className="flex justify-between">
         <Link
           to={"/"}
           className="flex content-center gap-2 border border-black rounded-lg px-4 py-1 w-52 items-center"
@@ -33,7 +37,7 @@ function ProjectsPage() {
           <img src={home} />
           Back to Home
         </Link>
-      
+
         <Button
           text={"Create new Project"}
           width={90}

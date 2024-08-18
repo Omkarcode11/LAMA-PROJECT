@@ -7,7 +7,6 @@ const Breadcrumb = () => {
   
   // Split the pathname into an array
   const pathnames = location.pathname.split("/").filter((x) => x);
-  console.log(pathnames)
 
   return (
     <nav className="flex pb-4" >

@@ -45,7 +45,7 @@ function App() {
       element: <ProjectNavigation />,
       children: [
         { path: '', element: <AddPodCast /> },
-        { path: 'edit', element: <EditEpisode /> },
+        { path: 'edit/:episodeId', element: <EditEpisode /> },
         { path: 'account', element: <AccountSettings /> },
         { path: 'deployment', element: <ComingSoon /> },
         { path: 'widget-config', element: <ComingSoon /> },

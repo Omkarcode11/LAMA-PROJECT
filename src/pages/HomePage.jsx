@@ -5,9 +5,15 @@ import add from "./../assets/add.svg";
 import Modal from "../components/Modal";
 import { useNavigate } from "react-router-dom";
 import CreateProjectModal from "../components/CreateProjectModal";
+import { myContext } from "../hooks/MyContextProvider";
+import useProject from "../hooks/useProject";
 
 function HomePage() {
   let [show, setShow] = useState(false);
+  let { auth, projects } = useContext(myContext);
+  let {createProject} = useProject()
+
+  let { getAllProjects } = useProject();
 
   let navigate = useNavigate();
 
@@ -19,10 +25,22 @@ function HomePage() {
     setShow((prev) => false);
   }
 
-  function createProjectHandler(e) {
+  function createProjectHandler(e,title) {
     e.preventDefault();
+    let data = {title:title}
+    createProject(data)
     navigate("/projects");
   }
+
+  if (projects && projects.length) {
+    navigate("/projects");
+  }
+
+
+
+  useEffect(() => {
+    getAllProjects();
+  }, []);
 
   return (
     <div className="">

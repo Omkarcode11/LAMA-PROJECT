@@ -1,13 +1,8 @@
 import React from 'react'
 import Episode from './Episode';
 
-function AllEpisodes() {
-    const files = [
-        { name: 'THE SIDEPOD S2 EPISODE 15', uploadDate: '25 Oct 23 | 09:04' },
-        { name: 'THE SIDEPOD S2 EPISODE 17', uploadDate: '27 Oct 23 | 11:08' },
-        { name: 'THE SIDEPOD S2 EPISODE 20', uploadDate: '31 Oct 23 | 20:28' },
-      ];
-    
+function AllEpisodes({episodes}) {
+        
       return (
         <div>
            <div className="bg-white shadow-md rounded-lg p-4">
@@ -22,8 +17,8 @@ function AllEpisodes() {
           </tr>
         </thead>
         <tbody>
-          {files.map((file, index) => (
-            <Episode file={file} index={index}/>
+          {episodes.map((ele, index) => (
+            <Episode file={ele} index={index}/>
           ))}
         </tbody>
       </table>   

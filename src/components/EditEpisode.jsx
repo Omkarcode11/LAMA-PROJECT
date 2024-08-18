@@ -1,23 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import back from "./../assets/back.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "./Button";
+import useProject from "../hooks/useProject";
 
-function EditEpisode({text}) {
+function EditEpisode() {
+  let param = useParams();
+  let contentRef = useRef();
+  // let [content,setContent] = useState()
+  let [newContent, setNewContent] = useState();
+  let { getEpisodeContent, updateContent } = useProject();
   let [isEdit, setIsEdit] = useState(false);
-  function edit(){
-      setIsEdit(prev=>true)
+  function edit() {
+    setIsEdit((prev) => true);
   }
-  function disCard(){
-    setIsEdit(prev=>false)
+  function disCard() {
+    setIsEdit((prev) => false);
+    setNewContent((prev) => contentRef.current);
   }
-  function save(){
-    setIsEdit(prev=>false)
+  async function save() {
+    await updateContent(param.episodeId, newContent);
+    contentRef.current = newContent;
+    setIsEdit((prev) => false);
   }
   let navigate = useNavigate();
   function goBack() {
     navigate(-1);
   }
+
+  async function getContent(id) {
+    let content = await getEpisodeContent(id);
+    contentRef.current = content;
+    setNewContent((prev) => content);
+  }
+
+  useEffect(() => {
+    let id = param.episodeId;
+    getContent(id);
+  }, []);
+
   return (
     <div>
       <div className="flex justify-between">
@@ -45,9 +66,12 @@ function EditEpisode({text}) {
         </div>
       </div>
 
-      <div className="bg-white p-8 rounded-md mt-8 h-[35rem] overflow-y-scroll">
-       {text}
-      </div>
+      <textarea
+        readOnly={!isEdit}
+        value={newContent}
+        onChange={(e) => setNewContent(e.target.value)}
+        className="bg-white p-8 rounded-md w-full mt-8 h-[35rem] outline-none overflow-y-scroll"
+      ></textarea>
     </div>
   );
 }
